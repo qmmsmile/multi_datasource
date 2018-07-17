@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qmm.multi.mapper.sqlserver.SqlserverMapper">
+
+	<select id="listColumns" resultType="java.lang.String" >
+		Select Name FROM SysColumns Where id=Object_Id(#{tableName})
+	</select>
+
+	<select id="listDataType" resultType="com.qmm.multi.model.po.DataType">
+		select a.name as [colunmName],b.name as dataType from syscolumns a,systypes b
+		where a.id=object_id(#{tableName}) and a.xtype=b.xtype
+	</select>
+
+	<insert id="insertByBatch">
+		INSERT INTO ${db}.${tableName}
+		(
+		<foreach collection="columns" item="item" index="index" separator=",">
+			${item}
+		</foreach>
+		)
+		VALUES
+		<foreach collection="list" item="item" index="index" separator=",">
+			(
+			<foreach collection="item" item="i" index="index" separator=",">
+				#{i}
+			</foreach>
+			)
+		</foreach>
+	</insert>
+
+	<delete id="deleteAll">
+		delete from ${tableName}
+	</delete>
+</mapper>

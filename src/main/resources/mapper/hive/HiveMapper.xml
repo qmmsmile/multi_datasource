@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qmm.multi.mapper.hive.HiveMapper">
+
+	<resultMap id="BaseResultMap" type="com.qmm.multi.model.po.DataType">
+		<result column="col_name" property="colunmName" />
+		<result column="data_type" property="dataType" />
+	</resultMap>
+
+	<select id="count" resultType="java.lang.Integer">
+		select count(*) from test
+	</select>
+
+	<select id="listDesc" resultMap="BaseResultMap">
+		DESC ${tableName}
+	</select>
+
+	<select id="listPartitions" resultType="java.lang.String">
+		show partitions ${tableName}
+	</select>
+
+	<select id="getCreateTable" resultType="java.util.Map">
+		show create table  ${tableName}
+	</select>
+
+	<select id="executePartition">
+		msck repair table ${tableName}
+	</select>
+</mapper>
