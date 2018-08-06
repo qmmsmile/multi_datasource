@@ -1,6 +1,7 @@
 package com.qmm.multi.controller;
 
 import com.qmm.multi.model.dto.DataResult;
+import com.qmm.multi.model.po.DataType;
 import com.qmm.multi.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +33,11 @@ public class TestController {
     @GetMapping(value = "/test1")
     public List<Map<String, String>> test(){
         return testService.test();
+    }
+
+    @GetMapping(value = "/listDataType")
+    public DataResult<List<DataType>> listDataType(){
+        return DataResult.ok(testService.listDataType());
     }
 
 }
